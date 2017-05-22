@@ -1,0 +1,7 @@
+name: Auction
+description: Allows products to be an auction entity.
+core: 8.x
+type: module
+package: Auction
+dependencies:
+  - commerce
