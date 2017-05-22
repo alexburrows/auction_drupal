@@ -23,12 +23,13 @@ class Bid {
     $query = \Drupal::database()->select('auction_bid', 'a')
       ->fields('a', array('bid_amount'))
       ->condition('etid', $product_id, 'IN')
-      ->orderBy('bid_amount', DESC)
+      ->orderBy('bid_amount', 'DESC')
       ->range(0, 1)
       ->execute();
     $result = $query->fetchField();
-
-    return $result;
+    if ($result) {
+      return $result;
+    }
   }
 
   /**
@@ -42,6 +43,9 @@ class Bid {
     if (time() >= $end_date) {
       return TRUE;
     }
+    else {
+      return  FALSE;
+    }
   }
 
   /**
@@ -49,7 +53,17 @@ class Bid {
    */
   public static function showWinningBid() {
     if (self::isBiddingOver()) {
-      return t('The winning bid is %bid', array('%bid' => self::lastBid()));
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
+  }
+
+  public static function winningBidisCurrentUser() {
+    //@todo get uid of winning bid.
+    if (\Drupal::currentUser()->id() === '1') {
+      return TRUE;
     }
   }
 

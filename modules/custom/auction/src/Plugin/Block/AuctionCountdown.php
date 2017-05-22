@@ -38,7 +38,7 @@ class AuctionCountdown extends BlockBase {
 
     $time = \Drupal::service('date.formatter')->formatDiff(time(), $end_date);
 
-    if (Bid::isBiddingOver()) {
+    if (Bid::isBiddingOver() === TRUE) {
       return [
         '#markup' => t('Bidding is over', 'warning')
       ];
@@ -50,6 +50,13 @@ class AuctionCountdown extends BlockBase {
       ];
     }
 
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
   }
 
 

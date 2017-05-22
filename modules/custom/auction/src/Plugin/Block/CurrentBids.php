@@ -20,17 +20,31 @@ class CurrentBids extends BlockBase {
   public function build() {
     $top_bid = Bid::lastBid();
 
-    if (Bid::isBiddingOver()) {
-      return [
-        '#markup' => t('The winning bid is %bid', array('%bid' => $top_bid)),
-      ];
+    if (Bid::isBiddingOver() === FALSE) {
+      if (!$top_bid) {
+        return [
+          '#markup' => t('There are no bids'),
+        ];
+      }
+      elseif ($top_bid) {
+        return [
+          '#markup' => t('The current highest bid is %bid', array('%bid' => $top_bid)),
+        ];
+      }
     }
     else {
       return [
-        '#markup' => t('The current highest bid is %bid', array('%bid' => $top_bid)),
+        '#markup' => t('Sorry bidding is now over'),
       ];
     }
 
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
   }
 
 

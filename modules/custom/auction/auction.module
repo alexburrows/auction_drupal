@@ -4,6 +4,9 @@
  * Auction.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\auction\Bid;
+
 /**
  * Implements hook_theme().
  */
@@ -15,4 +18,16 @@ function auction_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function auction_form_commerce_order_item_default_add_to_cart_1_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $bidding_over = Bid::isBiddingOver();
+  kint($bidding_over);
+  $winning_user = Bid::winningBidisCurrentUser();
+  if ($bidding_over === FALSE) {
+    unset($form['actions']);
+  }
 }

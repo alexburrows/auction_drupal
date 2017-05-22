@@ -19,7 +19,7 @@ class BiddingBlock extends BlockBase {
    */
   public function build() {
 
-    if (Bid::isBiddingOver() == FALSE) {
+    if (Bid::isBiddingOver() === FALSE) {
       $form = \Drupal::formBuilder()->getForm('\Drupal\auction\Form\BiddingForm');
 
       return $form;
